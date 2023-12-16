@@ -41,7 +41,7 @@ jobs:
       - run: |
           import pandas
           df = pandas.read_excel('https://www.dol.gov/sites/dolgov/files/ETA/oflc/pdfs/${{ matrix.file-name }}.xlsx', 
-            nrows= 99, 
+            # nrows= 99, 
             converters={
               'EMPLOYER_POSTAL_CODE':str,
               'EMPLOYER_NAME':str,
