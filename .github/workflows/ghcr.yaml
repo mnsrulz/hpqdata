@@ -58,7 +58,7 @@ jobs:
           if-no-files-found: error
           path: ${{ github.workspace}}/*.parquet
           retention-days: 1
-  process-parquet-data:
+  deploy-to-github:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -72,8 +72,28 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: parquet_dumps
+      - name: Create build directory
+        run: |
+          mkdir -p build/data
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - run: |
+          from pathlib import Path
+          import pandas as pd
+
+          data_dir = Path('parquet_dumps')
+          full_df = pd.concat(
+              pd.read_parquet(parquet_file)
+              for parquet_file in data_dir.rglob('*.parquet')
+          )
+          full_df.to_parquet('build/data/db.parquet')
+        shell: python
+        
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: parquet_dumps # The folder the action should deploy.
+          folder: build # The folder the action should deploy.
           clean: true # Automatically remove deleted files from the deploy branch
