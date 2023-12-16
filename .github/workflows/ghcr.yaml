@@ -6,7 +6,8 @@
 name: publish parquet file
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [main]
   
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -31,6 +32,9 @@ jobs:
           - LCA_Disclosure_Data_FY2022_Q3
           - LCA_Disclosure_Data_FY2022_Q4
           - LCA_Disclosure_Data_FY2023_Q1
+          - LCA_Disclosure_Data_FY2023_Q2
+          - LCA_Disclosure_Data_FY2023_Q3
+          - LCA_Disclosure_Data_FY2023_Q4
     steps:
       - uses: actions/checkout@v3
       - name: Setup python sqlite-utils
@@ -45,6 +49,7 @@ jobs:
             converters={
               'EMPLOYER_POSTAL_CODE':str,
               'EMPLOYER_NAME':str,
+              'EMPLOYER_CITY':str,
               'WORKSITE_POSTAL_CODE':str
             })
           df = df.loc[:, ['CASE_NUMBER', 'CASE_STATUS', 'JOB_TITLE', 'BEGIN_DATE', 'END_DATE', 'TOTAL_WORKER_POSITIONS', 'NEW_EMPLOYMENT', 'CONTINUED_EMPLOYMENT', 'EMPLOYER_NAME', 'WORKSITE_STATE', 'WORKSITE_POSTAL_CODE','EMPLOYER_CITY', 'EMPLOYER_STATE', 'EMPLOYER_POSTAL_CODE','WAGE_RATE_OF_PAY_FROM', 'WAGE_RATE_OF_PAY_TO', 'WAGE_UNIT_OF_PAY', 'PREVAILING_WAGE', 'PW_UNIT_OF_PAY']]
