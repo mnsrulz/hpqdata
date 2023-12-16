@@ -61,7 +61,6 @@ jobs:
   process-parquet-data:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
       contents: write
     needs: dump-parquet
     if: success()
