@@ -62,54 +62,19 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      contents: write
     needs: dump-parquet
     if: success()
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.1 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
-        with:
-          persist-credentials: false
-
-      - name: Install SSH Client 🔑
-        uses: webfactory/ssh-agent@v0.4.1
-        with:
-          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
-
+        uses: actions/checkout@v3
+        
       - name: Download artifacts 🔧
         uses: actions/download-artifact@v3
         with:
           path: parquet_dumps
-      # - name: Display structure of downloaded files
-      #   run: ls -R
-      #   working-directory: parquet_dumps
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          SSH: true
-          REPOSITORY_NAME: mnsrulz/hpqdata
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: parquet_dumps # The folder the action should deploy.
-          CLEAN: true # Automatically remove deleted files from the deploy branch
-      
-      # - name: Log in to the Container registry
-      #   uses: docker/login-action@v2
-      #   with:
-      #     registry: ${{ env.REGISTRY }}
-      #     username: ${{ github.actor }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Extract metadata (tags, labels) for Docker
-      #   id: meta
-      #   uses: docker/metadata-action@v4
-      #   with:
-      #     images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-      #     flavor: latest=true
-
-      # - name: Build and push Docker image
-      #   uses: docker/build-push-action@v3
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: ${{ steps.meta.outputs.tags }}
-      #     labels: ${{ steps.meta.outputs.labels }}
-
+          folder: parquet_dumps # The folder the action should deploy.
+          clean: true # Automatically remove deleted files from the deploy branch
