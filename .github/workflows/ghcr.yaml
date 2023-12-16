@@ -33,14 +33,6 @@ jobs:
           - LCA_Disclosure_Data_FY2023_Q1
     steps:
       - uses: actions/checkout@v3
-      - name: Download excel file
-        run: wget https://www.dol.gov/sites/dolgov/files/ETA/oflc/pdfs/${{ matrix.file-name }}.xlsx
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-      - name: Install xlsx2csv
-        run: dotnet tool update xlsx2csv --global
-      - name: Convert to csv
-        run: xlsx2csv ${{ matrix.file-name }}.xlsx
       - name: Setup python sqlite-utils
         uses: actions/setup-python@v4
         with:
@@ -48,7 +40,7 @@ jobs:
       - run: pip install -r requirements.txt
       - run: |
           df = pandas.read_excel('https://www.dol.gov/sites/dolgov/files/ETA/oflc/pdfs/${{ matrix.file-name }}.xlsx', 
-          # nrows= 99,
+          nrows= 99,
           converters={
               'EMPLOYER_POSTAL_CODE':str,
               'WORKSITE_POSTAL_CODE':str,
