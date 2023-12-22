@@ -46,7 +46,7 @@ jobs:
       - run: |
           import pandas
           df = pandas.read_excel('https://www.dol.gov/sites/dolgov/files/ETA/oflc/pdfs/LCA_Disclosure_Data_${{ matrix.file-name }}.xlsx', 
-            nrows= 99, 
+            # nrows= 99, 
             converters={
               'VISA_CLASS':str,
               'SOC_CODE':str,
