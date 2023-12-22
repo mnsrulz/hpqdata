@@ -123,4 +123,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: build/data/db.parquet
+          files: |
+            parquet_dumps/*
+            build/data/db.parquet
