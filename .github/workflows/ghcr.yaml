@@ -23,18 +23,18 @@ jobs:
       fail-fast: false
       matrix:
         file-name:
-          - LCA_Disclosure_Data_FY2021_Q1
-          - LCA_Disclosure_Data_FY2021_Q2
-          - LCA_Disclosure_Data_FY2021_Q3
-          - LCA_Disclosure_Data_FY2021_Q4
-          - LCA_Disclosure_Data_FY2022_Q1
-          - LCA_Disclosure_Data_FY2022_Q2
-          - LCA_Disclosure_Data_FY2022_Q3
-          - LCA_Disclosure_Data_FY2022_Q4
-          - LCA_Disclosure_Data_FY2023_Q1
-          - LCA_Disclosure_Data_FY2023_Q2
-          - LCA_Disclosure_Data_FY2023_Q3
-          - LCA_Disclosure_Data_FY2023_Q4
+          - FY2021_Q1
+          - FY2021_Q2
+          - FY2021_Q3
+          - FY2021_Q4
+          - FY2022_Q1
+          - FY2022_Q2
+          - FY2022_Q3
+          - FY2022_Q4
+          - FY2023_Q1
+          - FY2023_Q2
+          - FY2023_Q3
+          - FY2023_Q4
     steps:
       - uses: actions/checkout@v3
       - name: Setup python sqlite-utils
@@ -44,7 +44,7 @@ jobs:
       - run: pip install -r requirements.txt
       - run: |
           import pandas
-          df = pandas.read_excel('https://www.dol.gov/sites/dolgov/files/ETA/oflc/pdfs/${{ matrix.file-name }}.xlsx', 
+          df = pandas.read_excel('https://www.dol.gov/sites/dolgov/files/ETA/oflc/pdfs/LCA_Disclosure_Data_${{ matrix.file-name }}.xlsx', 
             # nrows= 99, 
             converters={
               'VISA_CLASS':str,
@@ -66,7 +66,7 @@ jobs:
                     'VISA_CLASS', 'JOB_TITLE', 'SOC_CODE', 'SOC_TITLE', 'FULL_TIME_POSITION', 
                     'BEGIN_DATE', 'END_DATE', 'TOTAL_WORKER_POSITIONS', 'NEW_EMPLOYMENT', 'CONTINUED_EMPLOYMENT', 
                     'CHANGE_PREVIOUS_EMPLOYMENT', 'NEW_CONCURRENT_EMPLOYMENT', 'CHANGE_EMPLOYER', 'AMENDED_PETITION', 
-                    'EMPLOYER_NAME', 'EMPLOYER_ADDRESS1', 'EMPLOYER_ADDRESS2', 'EMPLOYER_CITY', 'EMPLOYER_STATE', 'EMPLOYER_POSTAL_CODE'
+                    'EMPLOYER_NAME', 'EMPLOYER_ADDRESS1', 'EMPLOYER_ADDRESS2', 'EMPLOYER_CITY', 'EMPLOYER_STATE', 'EMPLOYER_POSTAL_CODE',
                     'WORKSITE_CITY', 'WORKSITE_STATE', 'WORKSITE_POSTAL_CODE',
                     'WAGE_RATE_OF_PAY_FROM', 'WAGE_RATE_OF_PAY_TO', 'WAGE_UNIT_OF_PAY', 'PREVAILING_WAGE', 'PW_UNIT_OF_PAY']]
           df.to_parquet('${{ matrix.file-name }}.parquet')
