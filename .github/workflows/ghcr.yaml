@@ -124,5 +124,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            parquet_dumps/*
+            parquet_dumps/*/*
             build/data/db.parquet
