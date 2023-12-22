@@ -45,7 +45,7 @@ jobs:
       - run: |
           import pandas
           df = pandas.read_excel('https://www.dol.gov/sites/dolgov/files/ETA/oflc/pdfs/LCA_Disclosure_Data_${{ matrix.file-name }}.xlsx', 
-            # nrows= 99, 
+            nrows= 99, 
             converters={
               'VISA_CLASS':str,
               'SOC_CODE':str,
@@ -113,8 +113,13 @@ jobs:
           full_df.to_parquet('build/data/db.parquet')
         shell: python
         
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
+      # - name: Deploy 🚀
+      #   uses: JamesIves/github-pages-deploy-action@v4
+      #   with:
+      #     folder: build # The folder the action should deploy.
+      #     clean: true # Automatically remove deleted files from the deploy branch
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        # if: startsWith(github.ref, 'refs/tags/')
         with:
-          folder: build # The folder the action should deploy.
-          clean: true # Automatically remove deleted files from the deploy branch
+          files: build/data/db.parquet
