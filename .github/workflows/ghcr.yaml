@@ -61,7 +61,11 @@ jobs:
               'JOB_TITLE':str,
               'CASE_STATUS':str,
               'EMPLOYER_ADDRESS1': str,
-              'EMPLOYER_ADDRESS2': str
+              'EMPLOYER_ADDRESS2': str,
+              'RECEIVED_DATE': lambda x: pandas.to_datetime(x, unit='d', origin='1899-12-30'),
+              'DECISION_DATE': lambda x: pandas.to_datetime(x, unit='d', origin='1899-12-30'),
+              'BEGIN_DATE': lambda x: pandas.to_datetime(x, unit='d', origin='1899-12-30'),
+              'END_DATE': lambda x: pandas.to_datetime(x, unit='d', origin='1899-12-30')
             })
           df = df.loc[:, ['CASE_NUMBER', 'CASE_STATUS', 'RECEIVED_DATE', 'DECISION_DATE', 'ORIGINAL_CERT_DATE', 
                     'VISA_CLASS', 'JOB_TITLE', 'SOC_CODE', 'SOC_TITLE', 'FULL_TIME_POSITION', 
