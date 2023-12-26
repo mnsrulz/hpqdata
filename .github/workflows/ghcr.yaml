@@ -61,11 +61,7 @@ jobs:
               'JOB_TITLE':str,
               'CASE_STATUS':str,
               'EMPLOYER_ADDRESS1': str,
-              'EMPLOYER_ADDRESS2': str,
-              'RECEIVED_DATE': lambda x: pandas.to_datetime(x, unit='d', infer_datetime_format=True),
-              'DECISION_DATE': lambda x: pandas.to_datetime(x, unit='d', infer_datetime_format=True),
-              'BEGIN_DATE': lambda x: pandas.to_datetime(x, unit='d', infer_datetime_format=True),
-              'END_DATE': lambda x: pandas.to_datetime(x, unit='d', infer_datetime_format=True)
+              'EMPLOYER_ADDRESS2': str
             })
           df = df.loc[:, ['CASE_NUMBER', 'CASE_STATUS', 'RECEIVED_DATE', 'DECISION_DATE', 'ORIGINAL_CERT_DATE', 
                     'VISA_CLASS', 'JOB_TITLE', 'SOC_CODE', 'SOC_TITLE', 'FULL_TIME_POSITION', 
@@ -115,6 +111,8 @@ jobs:
               pd.read_parquet(parquet_file)
               for parquet_file in data_dir.rglob('*.parquet')
           )
+          full_df['RECEIVED_DATE_YEAR'] = full_df['RECEIVED_DATE'].dt.year
+          full_df.sort_values(by='RECEIVED_DATE', ascending=False, inplace=True)
           full_df.to_parquet('build/data/db.parquet')
         shell: python
         
