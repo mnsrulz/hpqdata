@@ -2,7 +2,8 @@ import pandas
 
 data = ['LCA_Disclosure_Data_FY2021_Q1','LCA_Disclosure_Data_FY2021_Q2', 'LCA_Disclosure_Data_FY2021_Q3','LCA_Disclosure_Data_FY2021_Q4',
         'LCA_Disclosure_Data_FY2022_Q1','LCA_Disclosure_Data_FY2022_Q2','LCA_Disclosure_Data_FY2022_Q3','LCA_Disclosure_Data_FY2022_Q4',
-        'LCA_Disclosure_Data_FY2023_Q1', 'LCA_Disclosure_Data_FY2023_Q2', 'LCA_Disclosure_Data_FY2023_Q3', 'LCA_Disclosure_Data_FY2023_Q4']
+        'LCA_Disclosure_Data_FY2023_Q1', 'LCA_Disclosure_Data_FY2023_Q2', 'LCA_Disclosure_Data_FY2023_Q3', 'LCA_Disclosure_Data_FY2023_Q4',
+        'LCA_Disclosure_Data_FY2024_Q1', 'LCA_Disclosure_Data_FY2024_Q2', 'LCA_Disclosure_Data_FY2024_Q3']
 all_df = []
 for x in data[:1]:
     print(f'reading excel into dataframe: {x}')
