@@ -36,6 +36,9 @@ jobs:
           - FY2023_Q2
           - FY2023_Q3
           - FY2023_Q4
+          - FY2024_Q1
+          - FY2024_Q2
+          - FY2024_Q3
     steps:
       - uses: actions/checkout@v3
       - name: Setup python sqlite-utils
