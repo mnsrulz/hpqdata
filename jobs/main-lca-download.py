@@ -39,8 +39,8 @@ next_quarter_file_url = f'https://www.dol.gov/sites/dolgov/files/ETA/oflc/pdfs/{
 
 print(next_quarter_file_url)
 
-#check if the file url returns 200 OK by making a HEAD request
-response = requests.head(next_quarter_file_url)
+# Download the file to temp directory
+response = requests.get(next_quarter_file_url)
 print(response.status_code)
 print(f'Response status code: {response.status_code}')
 
@@ -50,8 +50,6 @@ if response.status_code != 200:
 
 os.makedirs("temp", exist_ok=True)  # Ensure the 'data' folder exists
 
-# Download the file to temp directory
-response = requests.get(next_quarter_file_url)
 temp_excel_summary_file = f'temp/{next_quarter_name}.xlsx'
 
 with open(temp_excel_summary_file, 'wb') as file:
