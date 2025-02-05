@@ -1,0 +1,79 @@
+name: LCA Data quarterly download
+
+on:
+  schedule:
+    - cron: '0 13 * * 1-6'
+  workflow_dispatch: # Allow manual trigger from GitHub Actions UI
+
+permissions:
+  contents: write
+
+jobs:
+  set-release-vars:
+    runs-on: ubuntu-latest    
+    outputs:
+      lca-release-tag: ${{ steps.lca_data.outputs.RELEASE_NAME }}      
+    steps:
+      - id: lca_data
+        run: echo "RELEASE_NAME=LCA_DATA_$(date '+%Y-%m-%d-%H-%M-%S')" >> ${GITHUB_OUTPUT}
+
+  lca-data-download-parquet:
+    runs-on: ubuntu-latest
+    needs: set-release-vars
+    env:
+      RELEASE_NAME: ${{needs.set-release-vars.outputs.lca-release-tag}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9" # Specify your Python version
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas openpyxl pandas requests pyarrow fastparquet
+      - name: Run the Python script
+        run: python jobs/main-lca-download.py
+      - name: Upload artifacts 
+        uses: actions/upload-artifact@v4
+        with:
+          name: lca-data
+          if-no-files-found: error
+          path: |
+            ${{ github.workspace}}/temp/*.parquet
+            ${{ github.workspace}}/data/lca-downloads-history.json
+  release-lca-quarterly-data:
+    runs-on: ubuntu-latest
+    needs: [set-release-vars, lca-data-download-parquet]
+    env:
+      RELEASE_NAME: ${{needs.set-release-vars.outputs.lca-release-tag}}
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # Fetch all commits to ensure the latest state is available
+          ref: main        # Ensure the latest state from the main branch is checked out
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: lca-data
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "temp/*.parquet"
+          tag: ${{ env.RELEASE_NAME }}
+          commit: "main"
+          allowUpdates: "true"
+          artifactErrorsFailBuild: "true"
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add --all
+          if git diff-index --quiet HEAD; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update data/lca-downloads-history.json (via GitHub Actions)"
+            git push
+          fi
