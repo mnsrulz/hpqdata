@@ -1,3 +1,4 @@
+import sys
 import requests
 import json
 import os
@@ -50,7 +51,7 @@ print(f'Response status code: {response.status_code}')
 
 if response.status_code != 200:
     print('Non 200 OK response code recieved indicating no new files to download. Exiting here!')
-    exit()
+    sys.exit(1)  # Exit with a non-zero status to indicate an error
 
 os.makedirs("temp", exist_ok=True)  # Ensure the 'data' folder exists
 
