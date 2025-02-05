@@ -22,5 +22,11 @@
         "year": 2021,
         "quarter": 4,
         "assetUrl": "https://github.com/mnsrulz/hpqdata/releases/download/LCA_DATA_2025-02-05-05-18-34/LCA_Disclosure_Data_FY2021_Q4.parquet"
+    },
+    {
+        "name": "LCA_Disclosure_Data_FY2022_Q1",
+        "year": 2022,
+        "quarter": 1,
+        "assetUrl": "https://github.com/mnsrulz/hpqdata/releases/download/LCA_DATA_2025-02-05-05-41-25/LCA_Disclosure_Data_FY2022_Q1.parquet"
     }
 ]
