@@ -15,13 +15,17 @@ with open(summary_file, 'r') as file:
 # print(data)
 
 # sort the data by year and quarter and find the latest
-summary_data.sort(key=lambda x: (x['year'], x['quarter']))
-latest_quarter = summary_data[-1]
-print(latest_quarter)
+if summary_data:
+    summary_data.sort(key=lambda x: (x['year'], x['quarter']))
+    latest_quarter = summary_data[-1]
+    print(latest_quarter)
 
-#assign year and quarter in variables
-year = latest_quarter['year']
-quarter = latest_quarter['quarter']
+    #assign year and quarter in variables
+    year = latest_quarter['year']
+    quarter = latest_quarter['quarter']
+else:
+    year = 2020 #if it's a fresh run with no previous data, default it to 2020
+    quarter = 4
 
 if(quarter == 4):
     year = year + 1
