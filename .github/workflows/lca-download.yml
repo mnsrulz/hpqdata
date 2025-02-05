@@ -2,7 +2,7 @@ name: LCA Data quarterly download
 
 on:
   schedule:
-    - cron: '0 13 * * 1-6'
+    - cron: '0 * * * 1-6'
   workflow_dispatch: # Allow manual trigger from GitHub Actions UI
 
 permissions:
