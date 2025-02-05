@@ -1,3 +1,8 @@
 [
-    
+    {
+        "name": "LCA_Disclosure_Data_FY2021_Q1",
+        "year": 2021,
+        "quarter": 1,
+        "assetUrl": "https://github.com/mnsrulz/hpqdata/releases/download/LCA_DATA_2025-02-05-03-24-58/LCA_Disclosure_Data_FY2021_Q1.parquet"
+    }
 ]
