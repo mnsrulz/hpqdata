@@ -1,11 +1,11 @@
 name: Consolidate LCA Data
 
 on:
-  # workflow_run:
-  #   workflows: ["CBOE options daily parquet"]
-  #   branches: [main]
-  #   types: 
-  #     - completed
+  workflow_run:
+    workflows: ["LCA Data quarterly download"]
+    branches: [main]
+    types: 
+      - completed
   workflow_dispatch: # Allow manual trigger from GitHub Actions UI
 
 permissions:
