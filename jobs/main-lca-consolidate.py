@@ -20,9 +20,11 @@ print(quarterly_asset_url_data)
 dfs = [pd.read_parquet(file, engine="pyarrow") for file in quarterly_asset_url_data]
 df = pd.concat(dfs, ignore_index=True)
 
+columns_to_keep = ['RECEIVED_DATE', 'CASE_STATUS', 'EMPLOYER_NAME', 'JOB_TITLE', 'PREVAILING_WAGE', 'PW_UNIT_OF_PAY', 'WORKSITE_STATE', 'WAGE_RATE_OF_PAY_FROM', 'WAGE_RATE_OF_PAY_TO', 'WAGE_UNIT_OF_PAY']
+df = df[columns_to_keep]
 
 df['RECEIVED_DATE_YEAR'] = df['RECEIVED_DATE'].dt.year
-df.sort_values(by='RECEIVED_DATE', ascending=False, inplace=True)
+df = df.sort_values(by=['RECEIVED_DATE', 'RECEIVED_DATE_YEAR', 'CASE_STATUS', 'EMPLOYER_NAME', 'WORKSITE_STATE', 'JOB_TITLE'])
 
 os.makedirs("temp", exist_ok=True)  # Ensure the 'data' folder exists
 output_file = "temp/db.parquet"
