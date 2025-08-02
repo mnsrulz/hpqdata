@@ -25,7 +25,7 @@ df = df[columns_to_keep]
 
 df['RECEIVED_DATE_YEAR'] = df['RECEIVED_DATE'].dt.year
 df = df.sort_values(by=['RECEIVED_DATE', 'RECEIVED_DATE_YEAR', 'CASE_STATUS', 'EMPLOYER_NAME', 'WORKSITE_STATE', 'JOB_TITLE'])
-
+df = df.drop_duplicates(subset='CASE_NUMBER', keep='last')
 os.makedirs("temp", exist_ok=True)  # Ensure the 'data' folder exists
 output_file = "temp/db.parquet"
 
