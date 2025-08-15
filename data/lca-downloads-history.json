@@ -106,5 +106,11 @@
         "year": 2025,
         "quarter": 2,
         "assetUrl": "https://github.com/mnsrulz/hpqdata/releases/download/LCA_DATA_2025-05-16-23-18-20/LCA_Disclosure_Data_FY2025_Q2.parquet"
+    },
+    {
+        "name": "LCA_Disclosure_Data_FY2025_Q3",
+        "year": 2025,
+        "quarter": 3,
+        "assetUrl": "https://github.com/mnsrulz/hpqdata/releases/download/LCA_DATA_2025-08-15-23-19-35/LCA_Disclosure_Data_FY2025_Q3.parquet"
     }
 ]
